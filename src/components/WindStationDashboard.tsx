@@ -154,7 +154,12 @@ export function WindStationDashboard() {
   const health = mode === "normal" ? 94 : mode === "warning" ? 72 : 38;
   const risk = mode === "normal" ? 2.8 : mode === "warning" ? 31 : 89;
   const sensorMode = (critical: boolean) => critical ? mode : "normal";
-  const addLog = (text: string, level: Mode, action?: "AUTO" | "MANUAL") => setLogs(old => [{ time: nowTime(), text, level, action }, ...old].slice(0, 8));
+  const addLog = (text: string, level: Mode, action?: "AUTO" | "MANUAL") => {
+    const item: LogItem = action
+      ? { time: nowTime(), text, level, action }
+      : { time: nowTime(), text, level };
+    setLogs(old => [item, ...old].slice(0, 8));
+  };
 
   const selectMode = (next: Mode) => {
     setMode(next); setSafeToReset(false);
@@ -170,7 +175,7 @@ export function WindStationDashboard() {
     setRelayOn(next);
     addLog(`Operator switched relay ${next ? "ON" : "OFF"}`, next ? "normal" : "warning", "MANUAL");
   };
-  const anomalies = useMemo(() => mode === "critical" ? [
+  const anomalies = useMemo<Array<[string, string, string]>>(() => mode === "critical" ? [
     ["10:15:04", "CRITICAL", "Gearbox temperature above trip threshold"], ["10:15:03", "CRITICAL", "Rotor overspeed signature detected"], ["10:14:58", "WARNING", "Tower vibration rising rapidly"],
   ] : mode === "warning" ? [["10:15:02", "WARNING", "Gearbox thermal gradient elevated"], ["10:14:56", "WARNING", "Vibration spectrum outside baseline"], ["10:12:08", "NORMAL", "Grid synchronization verified"]] : [["10:14:32", "NORMAL", "No abnormal vibration patterns"], ["10:12:08", "NORMAL", "Electrical harmonics within limits"], ["10:08:47", "NORMAL", "Structural model confidence 98.2%"]], [mode]);
 
