@@ -131,14 +131,18 @@ export function WindStationDashboard() {
   const [relayOn, setRelayOn] = useState(true);
   const [safeToReset, setSafeToReset] = useState(false);
   const [thresholdsOpen, setThresholdsOpen] = useState(false);
-  const [clock, setClock] = useState(new Date());
+  const [clock, setClock] = useState<Date | null>(null);
   const [logs, setLogs] = useState<LogItem[]>([
     { time: "10:14:32", text: "AI health assessment complete — no anomaly", level: "normal" },
     { time: "10:12:08", text: "Grid synchronization verified at 50.0 Hz", level: "normal" },
     { time: "10:08:47", text: "Protection relay self-test passed", level: "normal", action: "AUTO" },
   ]);
 
-  useEffect(() => { const id = window.setInterval(() => setClock(new Date()), 1000); return () => window.clearInterval(id); }, []);
+  useEffect(() => {
+    setClock(new Date());
+    const id = window.setInterval(() => setClock(new Date()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
   useEffect(() => {
     const id = window.setInterval(() => setReadings(prev => {
       const target = targetReadings[mode]; const next = { ...prev };
@@ -173,7 +177,7 @@ export function WindStationDashboard() {
   return <main className={cn("min-h-screen bg-background text-foreground", `mode-${mode}`)}>
     <header className="topbar">
       <div className="brand-mark"><div className="brand-icon"><ShieldCheck /></div><div><h1>TRANS-SHIELD <b>AI</b></h1><p>SMART POWER GRID MONITORING &amp; PREDICTIVE PROTECTION</p></div></div>
-      <div className="header-status"><StatusPill label="SYSTEM ONLINE"/><StatusPill label="AI ENGINE ACTIVE"/><div className="clock"><span>{clock.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }).toUpperCase()}</span><strong>{clock.toLocaleTimeString("en-GB", { hour12:false })}</strong></div><div className="connection"><Wifi/><span>LINK<br/><b>SECURE</b></span></div></div>
+      <div className="header-status"><StatusPill label="SYSTEM ONLINE"/><StatusPill label="AI ENGINE ACTIVE"/><div className="clock"><span>{clock ? clock.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }).toUpperCase() : "SYNCING"}</span><strong>{clock ? clock.toLocaleTimeString("en-GB", { hour12:false }) : "--:--:--"}</strong></div><div className="connection"><Wifi/><span>LINK<br/><b>SECURE</b></span></div></div>
     </header>
     <div className="breadcrumb"><span>POWER GRID</span><b>/</b><span>GENERATION</span><b>/</b><strong>WIND POWER STATION · WPS-01</strong></div>
 
