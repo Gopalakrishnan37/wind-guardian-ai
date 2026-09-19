@@ -10,12 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DistributionRouteImport } from './routes/distribution'
+import { Route as SubstationRouteImport } from './routes/substation'
 import { Route as TransformerRouteImport } from './routes/transformer'
 import { Route as TransmissionRouteImport } from './routes/transmission'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DistributionRoute = DistributionRouteImport.update({
+  id: '/distribution',
+  path: '/distribution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubstationRoute = SubstationRouteImport.update({
+  id: '/substation',
+  path: '/substation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransformerRoute = TransformerRouteImport.update({
@@ -31,30 +43,45 @@ const TransmissionRoute = TransmissionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/distribution': typeof DistributionRoute
+  '/substation': typeof SubstationRoute
   '/transformer': typeof TransformerRoute
   '/transmission': typeof TransmissionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/distribution': typeof DistributionRoute
+  '/substation': typeof SubstationRoute
   '/transformer': typeof TransformerRoute
   '/transmission': typeof TransmissionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/distribution': typeof DistributionRoute
+  '/substation': typeof SubstationRoute
   '/transformer': typeof TransformerRoute
   '/transmission': typeof TransmissionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/transformer' | '/transmission'
+  fullPaths:
+    '/' | '/distribution' | '/substation' | '/transformer' | '/transmission'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/transformer' | '/transmission'
-  id: '__root__' | '/' | '/transformer' | '/transmission'
+  to: '/' | '/distribution' | '/substation' | '/transformer' | '/transmission'
+  id:
+    | '__root__'
+    | '/'
+    | '/distribution'
+    | '/substation'
+    | '/transformer'
+    | '/transmission'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DistributionRoute: typeof DistributionRoute
+  SubstationRoute: typeof SubstationRoute
   TransformerRoute: typeof TransformerRoute
   TransmissionRoute: typeof TransmissionRoute
 }
@@ -66,6 +93,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/distribution': {
+      id: '/distribution'
+      path: '/distribution'
+      fullPath: '/distribution'
+      preLoaderRoute: typeof DistributionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/substation': {
+      id: '/substation'
+      path: '/substation'
+      fullPath: '/substation'
+      preLoaderRoute: typeof SubstationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transformer': {
@@ -87,6 +128,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DistributionRoute: DistributionRoute,
+  SubstationRoute: SubstationRoute,
   TransformerRoute: TransformerRoute,
   TransmissionRoute: TransmissionRoute,
 }
