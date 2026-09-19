@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { TransmissionDashboard } from "@/components/TransmissionDashboard";
+export const Route=createFileRoute("/transmission")({head:()=>({meta:[{title:"TRANS-SHIELD AI | TL-01 Transmission Monitoring"},{name:"description",content:"AI-enabled transmission line monitoring, dynamic line rating, and local substation protection for TL-01."},{property:"og:title",content:"TRANS-SHIELD AI | TL-01 Transmission Monitoring"},{property:"og:description",content:"Live line telemetry, dynamic line rating, predictive protection, and breaker automation."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:TransmissionDashboard});
