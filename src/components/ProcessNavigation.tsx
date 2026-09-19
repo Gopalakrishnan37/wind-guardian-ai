@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Factory, RadioTower, Wind } from "lucide-react";
+import { Building2, Factory, Network, RadioTower, Wind } from "lucide-react";
 
 const processes = [
   { to: "/", step: "PROCESS 1", label: "Wind Power Station", icon: Wind },
   { to: "/transformer", step: "PROCESS 2", label: "Step-Up Transformer", icon: Factory },
   { to: "/transmission", step: "PROCESS 3", label: "Transmission Line & Tower", icon: RadioTower },
+  { to: "/substation", step: "PROCESS 4", label: "Grid Substation", icon: Building2 },
+  { to: "/distribution", step: "PROCESS 5", label: "Distribution Transformer", icon: Factory },
 ] as const;
 
 export function ProcessNavigation() {
@@ -20,7 +22,7 @@ export function ProcessNavigation() {
             {index < processes.length - 1 && <b aria-hidden="true">›</b>}
           </div>
         ))}
-        <div className="future-process"><small>FUTURE PROCESS 4</small><strong>Substation / Grid</strong></div>
+        <div className="future-process"><Network/><span><small>GRID DESTINATION</small><strong>Distribution Network · Consumers</strong></span></div>
       </div>
     </nav>
   );
