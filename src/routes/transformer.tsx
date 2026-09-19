@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { TransformerDashboard } from "@/components/TransformerDashboard";
+export const Route=createFileRoute("/transformer")({head:()=>({meta:[{title:"TRANS-SHIELD AI | TR-01 Transformer Monitoring"},{name:"description",content:"AI-enabled step-up transformer monitoring, local edge protection, and predictive health for TR-01."},{property:"og:title",content:"TRANS-SHIELD AI | TR-01 Transformer Monitoring"},{property:"og:description",content:"Live transformer telemetry, predictive health, and edge-first relay protection."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:TransformerDashboard});
