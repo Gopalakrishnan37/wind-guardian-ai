@@ -1,4 +1,4 @@
-import { useEffect, type ElementType, type ReactNode } from "react";
+import { useEffect, useState, type ElementType, type ReactNode } from "react";
 import { Activity, AlertTriangle, BrainCircuit, Cpu, Grid3X3, Radio, ShieldCheck, Wifi } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,8 +14,7 @@ export function OperationsHeader({ clock }: { clock: Date | null }) {
 }
 
 export function useClock() {
-  const React = require("react") as typeof import("react");
-  const [clock, setClock] = React.useState<Date | null>(null);
+  const [clock, setClock] = useState<Date | null>(null);
   useEffect(() => { setClock(new Date()); const id = window.setInterval(() => setClock(new Date()), 1000); return () => window.clearInterval(id); }, []);
   return clock;
 }

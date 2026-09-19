@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { ProcessNavigation } from "@/components/ProcessNavigation";
 
 type Mode = "normal" | "warning" | "critical";
 type LogItem = { time: string; text: string; level: Mode; action?: "AUTO" | "MANUAL" };
@@ -185,6 +186,7 @@ export function WindStationDashboard() {
       <div className="header-status"><StatusPill label="SYSTEM ONLINE"/><StatusPill label="AI ENGINE ACTIVE"/><div className="clock"><span>{clock ? clock.toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }).toUpperCase() : "SYNCING"}</span><strong>{clock ? clock.toLocaleTimeString("en-GB", { hour12:false }) : "--:--:--"}</strong></div><div className="connection"><Wifi/><span>LINK<br/><b>SECURE</b></span></div></div>
     </header>
     <div className="breadcrumb"><span>POWER GRID</span><b>/</b><span>GENERATION</span><b>/</b><strong>WIND POWER STATION · WPS-01</strong></div>
+    <ProcessNavigation />
 
     <div className="dashboard-shell">
       {mode === "critical" && <div className="trip-banner"><TriangleAlert/><strong>CRITICAL PROTECTION TRIP</strong><span>Relay opened automatically · Grid isolated · Operator acknowledgement required</span></div>}
